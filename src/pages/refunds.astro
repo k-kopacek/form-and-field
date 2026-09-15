@@ -1,0 +1,32 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { legal } from '../data/legal';
+import { prices } from '../data/services';
+import { path } from '../data/site';
+---
+<LegalLayout slug="refunds" eyebrow="Payments" title="Refund and cancellation policy" updated={legal.refundsUpdated} description="Cancellation notice, late cancellation, package expiry, and refund terms for Form + Field sessions.">
+  <h2>Cancelling or rescheduling</h2>
+  <p>Please give at least {legal.cancellationHours} hours' notice to cancel or reschedule any appointment. With that notice there is no charge, and a prepaid session is returned to your account or refunded.</p>
+  <p>Cancellations with less than {legal.cancellationHours} hours' notice, and no-shows, forfeit the session or its fee, because the time was held for you and cannot be offered to someone else. We understand that illness and emergencies happen; contact us as early as you can and we will do our best to be reasonable.</p>
+  <p>For equine and Horse + Rider sessions, if your horse is unwell or unsafe to work with on the day, tell us before the session starts. We will reschedule without charge where we can. If we arrive and cannot safely work, the session fee may apply.</p>
+
+  <h2>Sessions we cancel</h2>
+  <p>If we need to cancel, for example because of weather, illness, or road conditions, we will offer a new time or a full refund of any prepaid amount, your choice.</p>
+
+  <h2>Single sessions</h2>
+  <p>Single sessions ({prices.intro.name}, {prices.private.name}, {prices.duet.name}, {prices.equine.name}, {prices.partnership.name}) paid in advance are fully refundable if cancelled with the notice above.</p>
+
+  <h2>Packages</h2>
+  <ul>
+    <li>Session packages ({prices.five.name}, {prices.ten.name}) are valid for {legal.packageValidityMonths} months from the date of purchase. Sessions not used by then expire.</li>
+    <li>Packages are for one named client and are not transferable, except that unused sessions may be transferred to another person by prior arrangement with us.</li>
+    <li>You may request a refund of a package within {legal.refundWindowDays} days of purchase. We refund the amount paid less any sessions already used, charged at the single-session rate of ${legal.singleSessionPrice} each.</li>
+    <li>After {legal.refundWindowDays} days, packages are non-refundable except where we are unable to provide the remaining sessions, in which case we refund the unused balance at the package's per-session rate.</li>
+  </ul>
+
+  <h2>How refunds are paid</h2>
+  <p>Refunds are made to the original payment method through Square, usually within 5 to 10 business days of approval. We cannot refund to a different card or in cash.</p>
+
+  <h2>Questions or disputes</h2>
+  <p>Contact us first using the details below; most issues can be sorted out directly. Nothing in this policy limits rights you have under Colorado consumer protection law. This policy forms part of our <a class="inline-link" href={path('terms')}>Terms of service</a>.</p>
+</LegalLayout>

@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+import BookingLink from '../components/BookingLink.astro';
+import Arrow from '../components/Arrow.astro';
+import { brand, path, asset } from '../data/site';
+import { resolveSlot } from '../data/images';
+import { services } from '../data/services';
+import EditorialImage from '../components/EditorialImage.astro';
+import Pricing from '../components/Pricing.astro';
+import Faq from '../components/Faq.astro';
+import Closing from '../components/Closing.astro';
+import Testimonials from '../components/Testimonials.astro';
+import { faqGroups } from '../data/faq';
+const hero = resolveSlot('home-hero');
+---
+<Layout title="Private Pilates & Equine Bodywork in Larkspur, Colorado" description="Thoughtful movement for people, horses, and the partnership between them. Private Pilates, equine bodywork, and horse + rider sessions with Stephanie Kopacek.">
+  <section class="hero wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">{brand.descriptor}</p>
+      <h1>Good movement.<br /><em>Common ground.</em></h1>
+      <p class="hero-description">Private Pilates, equine bodywork, and a thoughtful approach to the way we move. Individually. Together.</p>
+      <div class="hero-actions"><BookingLink /><a class="text-link" href="#approach">Explore our approach <Arrow /></a></div>
+      <p class="hero-location"><span class="small-cross" aria-hidden="true">+</span> {brand.location}<span class="location-rule"></span>By appointment</p>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-image">{hero && <img src={asset(hero.src)} srcset={hero.srcset.map(s => { const [f, w] = s.split(' '); return asset(f) + ' ' + w; }).join(', ')} sizes="(max-width: 639px) 90vw, 45vw" alt={hero.alt} width={hero.width} height={hero.height} fetchpriority="high" decoding="async" />}</div>
+      <div class="hero-note"><span>One philosophy.<br />Room for every body.</span><span class="large-plus" aria-hidden="true">+</span></div>
+    </div>
+  </section>
+  <section id="approach" class="intro-section wrap section">
+    <p class="eyebrow">A shared language of movement</p>
+    <div><h2>Different bodies.<br /><em>The same attention.</em></h2><p>Strength. Mobility. Balance. They matter in the studio and in the saddle. At {brand.name}, Stephanie Kopacek brings private Pilates and equine bodywork together through careful observation and individual attention.</p><a class="text-link" href={path('about')}>Meet Stephanie <Arrow /></a></div>
+  </section>
+  <section class="services-section wrap section">
+    <div class="section-heading"><p class="eyebrow">Three ways to work together</p><h2>Find your starting point.</h2></div>
+    <div class="service-list">{services.map(service => <a href={path(service.slug)} class="service-row"><span class="service-number">{service.number} / {service.label}</span><h3>{service.title}</h3><p>{service.description}</p><span class="circle-arrow"><Arrow /></span></a>)}</div>
+  </section>
+  <section class="signature-feature"><div class="wrap section">
+    <div><p class="eyebrow">The signature experience</p><h2>Two athletes.<br /><em>One conversation.</em></h2><p>Horse + Rider brings the work together. Explore your own balance, mobility, and awareness alongside your horse’s movement, with Stephanie’s attention on the partnership.</p><a class="text-link" href={path('horse-rider')}>Discover Horse + Rider <Arrow /></a></div>
+    <div class="signature-type" aria-hidden="true"><span>Horse</span><span>+</span><em>Rider</em></div>
+  </div></section>
+  <section class="founder-section wrap section"><p class="eyebrow">Your guide to the work</p><div><h2>Thoughtful by nature.<br /><em>Personal by practice.</em></h2><p>Meet Stephanie Kopacek. Private Pilates instructor, Balance Through Movement Method certified practitioner, and the person connecting the studio to the field.</p><p class="fine-print">Currently completing her Polestar Pilates education/certification.</p><a class="text-link" href={path('about')}>More about Stephanie <Arrow /></a></div></section>
+  <section class="studio-feature wrap section"><EditorialImage slot="studio-feature" /><div><p class="eyebrow">A private practice in Larkspur</p><h2>A little space.<br /><em>A lot of attention.</em></h2><p>A quiet Colorado property setting. Professional Pilates equipment. Individual appointments with room to focus on the work.</p><a class="text-link" href={path('studio')}>Get to know the studio <Arrow /></a></div></section>
+  <section class="wrap section price-section"><div><p class="eyebrow">Your starting point</p><h2>Begin with<br /><em>one session.</em></h2><p class="support-copy">Explore the work at your pace, with individual attention from the first visit.</p><a class="text-link" href={path('book')}>All sessions & pricing <Arrow /></a></div><Pricing items={['intro', 'equine', 'partnership']} /></section>
+  <Testimonials />
+  <section class="wrap section faq-section"><div><p class="eyebrow">Before you begin</p><h2>Good to know.</h2><a class="text-link" href={path('faq')}>All questions <Arrow /></a></div><Faq items={[faqGroups[0].items[0], faqGroups[2].items[0], faqGroups[3].items[0]]} /></section>
+  <Closing />
+</Layout>

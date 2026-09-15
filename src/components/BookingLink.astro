@@ -1,0 +1,7 @@
+---
+import { bookingHref, booking } from '../data/site';
+import Arrow from './Arrow.astro';
+interface Props { label?: string; light?: boolean; class?: string }
+const { label = 'Book a session', light = false, class: className = '' } = Astro.props;
+---
+<a class:list={['button', { 'button-light': light }, className]} href={bookingHref()} target={booking.external ? '_blank' : undefined} rel={booking.external ? 'noopener' : undefined}>{label}{booking.external && <span class="visually-hidden"> (opens in a new tab)</span>}<Arrow /></a>

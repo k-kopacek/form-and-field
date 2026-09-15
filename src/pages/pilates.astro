@@ -1,0 +1,27 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EditorialImage from '../components/EditorialImage.astro';
+import BookingLink from '../components/BookingLink.astro';
+import Pricing from '../components/Pricing.astro';
+import Faq from '../components/Faq.astro';
+import Closing from '../components/Closing.astro';
+import { equipment } from '../data/services';
+import { faqGroups } from '../data/faq';
+import { path } from '../data/site';
+---
+<Layout active="pilates" title="Private Pilates in Larkspur, CO" description="Private Pilates with Stephanie Kopacek in Larkspur, Colorado. Personalized reformer sessions for strength, mobility, balance, and confidence in movement.">
+  <section class="page-hero wrap">
+    <div class="page-hero-copy"><p class="eyebrow">01 / Pilates & movement</p><h1>More aware.<br /><em>More capable.</em></h1><p>Private Pilates that makes space for your body, your goals, and the way you move through life.</p><BookingLink label="Begin with an intro" /></div>
+    <EditorialImage slot="pilates-hero" eager />
+  </section>
+  <section class="editorial-split wrap section">
+    <div><p class="eyebrow">One person. Your pace.</p><h2>Instruction that<br /><em>meets you here.</em></h2><EditorialImage slot="reformer-detail" class="split-image" sizes="(max-width: 1023px) 90vw, 35vw" /></div>
+    <div class="prose"><p>There is no standard body, and no single starting point. Stephanie builds private sessions around your experience, goals, and what she observes in your movement.</p><p>Explore strength, mobility, alignment, and control with clear guidance and time to ask questions. The aim is a more confident relationship with movement, in the studio and beyond it.</p><p>Beginners, active adults, athletes, and riders are welcome. You do not need riding experience or previous Pilates practice.</p></div>
+  </section>
+  <section class="sage-section"><div class="wrap section editorial-split"><div><p class="eyebrow">Your first session</p><h2>A thoughtful<br /><em>place to begin.</em></h2></div><ol class="steps"><li><h3>Start with a conversation.</h3><p>Share your goals, movement experience, and what you would like to explore.</p></li><li><h3>Get to know the equipment.</h3><p>Stephanie introduces the apparatus and guides you through movements at a comfortable pace.</p></li><li><h3>Find a direction.</h3><p>Reflect on the session and discuss an approach that makes sense for you.</p></li></ol></div></section>
+  <div class="wide-figure wrap"><EditorialImage slot="stephanie-teaching" class="wide-image" sizes="90vw" /></div>
+  <section class="wrap section editorial-split"><div><p class="eyebrow">The studio apparatus</p><h2>Purposeful tools.<br /><em>Personal attention.</em></h2><p class="support-copy">Equipment creates different ways to explore resistance, support, and movement.</p></div><ul class="plain-list">{equipment.map(item => <li>{item}</li>)}</ul></section>
+  <section class="wrap section price-section"><div><p class="eyebrow">Pilates sessions</p><h2>Make room<br /><em>for movement.</em></h2><p class="support-copy">Each private session is dedicated to you. Duets offer a shared experience for two.</p><p class="fine-print">Stephanie is completing her Polestar Pilates education/certification.</p></div><div><Pricing items={['intro', 'private', 'five', 'ten', 'duet']} /><BookingLink /><p class="fine-print">Pilates is exercise, not medical treatment or physical therapy. Please check with your physician before starting a new exercise program, especially if you are pregnant, injured, or managing a health condition, and tell Stephanie about anything that may affect your session. Packages are valid for 12 months; see our <a class="inline-link" href={path('refunds')}>cancellation and refund policy</a>.</p></div></section>
+  <section class="wrap section faq-section"><div><p class="eyebrow">Before you begin</p><h2>A few good questions.</h2></div><Faq items={faqGroups[0].items} /></section>
+  <Closing />
+</Layout>

@@ -1,0 +1,8 @@
+---
+import { prices, type PriceKey } from '../data/services';
+interface Props { items: PriceKey[]; compact?: boolean }
+const { items, compact = false } = Astro.props;
+---
+<dl class:list={['pricing', { compact }]}>
+  {items.map(key => { const item = prices[key]; return <div class="price-row"><dt><span class="price-name">{item.name}</span><span class="price-duration">{item.duration}</span>{!compact && <span class="price-note">{item.note}</span>}</dt><dd>{'$' + item.price}{'suffix' in item && <small>{item.suffix}</small>}</dd></div>; })}
+</dl>

@@ -1,0 +1,56 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Arrow from '../components/Arrow.astro';
+import Pricing from '../components/Pricing.astro';
+import { booking, contact, path, policy } from '../data/site';
+import { legal } from '../data/legal';
+import { services } from '../data/services';
+---
+<Layout title="Book a Session" description="Plan a private Pilates, equine bodywork, or Horse + Rider session with Stephanie Kopacek in Larkspur, Colorado.">
+  <section class="wrap section booking-page">
+    <div class="booking-intro"><p class="eyebrow">Make your next move</p><h1>Time<br /><em>for you.</em></h1><p>Choose your starting point. Each appointment is built around individual attention.</p><div class="booking-notes"><p>Larkspur, Colorado<br />By appointment only</p><p>Exact directions are shared with confirmed clients.</p><p>Please give at least {policy.cancellationHours} hours’ notice to cancel or reschedule. <a class="inline-link" href={path('refunds')}>Full cancellation and refund policy</a>.</p></div></div>
+    <div>
+      <section id="scheduling" class="booking-panel">
+        <p class="eyebrow">Appointments</p>
+        {booking.url ? <>
+          <h2>Find your time.</h2>
+          <p>See available appointments and complete your booking through Square, our scheduling partner.</p>
+          {booking.embedSrc && <div class="booking-embed" data-src={booking.embedSrc}>
+            <p class="fine-print">The booking calendar is provided by Square and loads only when you ask for it. Loading it lets Square set the cookies it needs to run the calendar (see our <a class="inline-link" href={path('cookies')}>cookie policy</a>).</p>
+            <button type="button" class="button button-light booking-embed-load">Show booking calendar</button>
+            <div class="booking-embed-target" aria-live="polite"></div>
+          </div>}
+          <a class="button" href={booking.url} target="_blank" rel="noopener">{booking.embedSrc ? 'Open booking in a new tab' : 'Book on Square'}<span class="visually-hidden"> (opens in a new tab)</span> <Arrow /></a>
+          {contact.email && <p class="fine-print">Questions first? <a class="inline-link" href={'mailto:' + contact.email}>{contact.email}</a></p>}
+          <p class="fine-print">Booking and payment are handled by Square; this website never collects payment details. By booking you agree to our <a class="inline-link" href={path('terms')}>terms</a> and <a class="inline-link" href={path('refunds')}>cancellation policy</a>.</p>
+        </> : <>
+          <h2>A considered start.</h2>
+          <p>Online scheduling is being prepared. Appointment availability will appear here once booking opens.</p>
+          {contact.email && <a class="button" href={'mailto:' + contact.email}>Email to ask about a session <Arrow /></a>}
+          {contact.phone && <p class="fine-print">Or call or text <a class="inline-link" href={'tel:' + contact.phone.replace(/[^+\d]/g, '')}>{contact.phone}</a>.</p>}
+          <p class="fine-print">Browse the session options below while scheduling is being finalized. Sessions are subject to our <a class="inline-link" href={path('terms')}>terms</a> and <a class="inline-link" href={path('refunds')}>cancellation policy</a>.</p>
+        </>}
+      </section>
+      <Pricing items={['intro', 'private', 'five', 'ten', 'duet', 'equine', 'partnership']} compact />
+      <p class="fine-print">For equine and Horse + Rider sessions, confirm the format and location before arranging horse transport. Session packages are valid for {legal.packageValidityMonths} months from purchase.</p>
+    </div>
+  </section>
+  <section class="wrap section"><div class="section-heading"><p class="eyebrow">Find the right fit</p><h2>Get to know the work.</h2></div><div class="booking-service-links">{services.map(service => <a href={path(service.slug)}><span>{service.title}</span><Arrow /></a>)}</div></section>
+<script>
+  // Loads Square's booking widget only after the visitor asks for it, so no third-party script or cookie runs by default.
+  document.querySelectorAll<HTMLElement>('.booking-embed').forEach(box => {
+    const button = box.querySelector<HTMLButtonElement>('.booking-embed-load');
+    const target = box.querySelector<HTMLElement>('.booking-embed-target');
+    const src = box.dataset.src;
+    if (!button || !target || !src) return;
+    button.addEventListener('click', () => {
+      const script = document.createElement('script');
+      script.src = src; script.async = true;
+      target.appendChild(script);
+      button.disabled = true; button.textContent = 'Loading booking calendar…';
+      script.addEventListener('load', () => { button.hidden = true; });
+      script.addEventListener('error', () => { button.disabled = false; button.textContent = 'Calendar failed to load. Try again or use the link below.'; });
+    });
+  });
+</script>
+</Layout>

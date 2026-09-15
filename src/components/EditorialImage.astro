@@ -1,0 +1,23 @@
+---
+import { asset } from '../data/site';
+import { resolveSlot, ratioCss, type SlotName } from '../data/images';
+interface Props { slot: SlotName; eager?: boolean; sizes?: string; class?: string }
+const { slot, eager = false, sizes = '(max-width: 639px) 90vw, 45vw', class: className = '' } = Astro.props;
+const image = resolveSlot(slot);
+---
+{image && (
+  <figure class:list={['editorial-image', className]} style={`--ratio: ${ratioCss[image.ratio]}`}>
+    <img
+      src={asset(image.src)}
+      srcset={image.srcset.map(s => { const [file, w] = s.split(' '); return asset(file) + ' ' + w; }).join(', ')}
+      sizes={sizes}
+      alt={image.alt}
+      width={image.width}
+      height={image.height}
+      loading={eager ? 'eager' : 'lazy'}
+      fetchpriority={eager ? 'high' : undefined}
+      decoding="async"
+    />
+    {image.caption && <figcaption>{image.caption}</figcaption>}
+  </figure>
+)}

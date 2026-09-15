@@ -1,0 +1,21 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { legal } from '../data/legal';
+import { path } from '../data/site';
+---
+<LegalLayout slug="cookies" eyebrow="Tracking" title="Cookie policy" updated={legal.cookiesUpdated} description="Form + Field does not use cookies or analytics on its website. This page explains the one exception and why no consent banner is shown.">
+  <h2>This website does not set cookies</h2>
+  <p>We do not use analytics, advertising cookies, social-media buttons, embedded videos, or any tracking scripts. Fonts and images are served from our own site rather than from third-party servers, so no other company is told which pages you visit. Because nothing on this site tracks you, there is no cookie consent banner: there is nothing to consent to.</p>
+
+  <h2>The one exception: online booking</h2>
+  <p>If we have enabled Square's booking calendar on the <a class="inline-link" href={path('book')}>Book page</a>, it is not loaded automatically. You will see a button that says "Show booking calendar". Only when you press it does your browser load Square's software, and Square may then set cookies that it needs to run the calendar and keep your booking session, under <a class="inline-link" href="https://squareup.com/us/en/legal/general/cookie" target="_blank" rel="noopener">Square's cookie policy</a>. If you prefer not to load it, use the "Open booking in a new tab" link instead, which takes you to Square's own website.</p>
+
+  <h2>Browser storage</h2>
+  <p>This site does not use local storage, session storage, or similar browser storage.</p>
+
+  <h2>Server logs</h2>
+  <p>Our hosting provider records standard server logs (IP address, browser type, pages requested, time of request) to run and secure the service. These logs are not cookies and are not used to identify or track individual visitors. See our <a class="inline-link" href={path('privacy')}>Privacy policy</a> for details.</p>
+
+  <h2>If this changes</h2>
+  <p>If we ever add analytics or other tracking, we will update this page, describe each cookie and its purpose, and add a consent control before any non-essential cookie is set.</p>
+</LegalLayout>

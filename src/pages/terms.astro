@@ -1,0 +1,47 @@
+---
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { legal, equineWarning } from '../data/legal';
+import { path } from '../data/site';
+---
+<LegalLayout slug="terms" eyebrow="Agreement" title="Terms of service" updated={legal.termsUpdated} description="The terms that apply to booking and attending Pilates, equine bodywork, and Horse + Rider sessions with Form + Field, and to using this website.">
+  <p>These terms are an agreement between you and {legal.legalName}, {legal.entityType}, trading as {legal.tradeName} ("we", "us"). By booking a session or using this website you agree to them. Please read them together with our <a class="inline-link" href={path('privacy')}>Privacy policy</a> and <a class="inline-link" href={path('refunds')}>Refund and cancellation policy</a>, which form part of these terms.</p>
+
+  <h2>1. What we provide</h2>
+  <p>We offer private Pilates instruction, equine bodywork, and combined Horse + Rider sessions in and around Larkspur, Colorado, by appointment. Session descriptions, durations, and prices are set out on this website and confirmed when you book. Prices may change; the price shown when you book is the price you pay.</p>
+
+  <h2>2. Not medical, veterinary, or therapeutic care</h2>
+  <p>Pilates instruction is exercise and movement education. It is not physical therapy, medical treatment, massage therapy, or a substitute for advice from a licensed healthcare provider. Equine bodywork supports movement and performance; it does not diagnose, treat, or cure any disease, lameness, injury, or medical condition, and it is not a substitute for veterinary care. We do not prescribe, and we will refer you to your physician or veterinarian where appropriate. Any suggestion we make is general information, not medical or veterinary advice.</p>
+  <p>You are responsible for consulting a physician before beginning an exercise program, particularly if you are pregnant, recovering from injury or surgery, or have a medical condition, and for telling us about anything that may affect your participation. Owners are responsible for consulting a veterinarian about their horse's health and for telling us about lameness, injury, illness, or behavioral concerns before a session.</p>
+
+  <h2>3. Assumption of risk and release</h2>
+  <p>Exercise and working with horses involve inherent risks, including muscle strain, falls, and, with horses, unpredictable animal behavior that can cause serious injury. You take part voluntarily and accept those risks. To the fullest extent permitted by Colorado law, you release us, our owners, and anyone working with us from claims arising out of the inherent risks of these activities. This release does not cover injuries caused by our gross negligence or willful misconduct, and nothing in these terms limits liability that cannot be limited by law.</p>
+  <p>Before your first session we will ask you to sign a separate participation agreement that repeats and expands on this section. Sessions cannot begin until it is signed.</p>
+
+  <h2>4. Equine activities: Colorado statutory warning</h2>
+  <p class="statutory-warning">{equineWarning}</p>
+  <p>Equine sessions take place only at locations, and with handling arrangements, agreed with us in advance. You confirm that you own the horse or have the owner's authority to arrange the session, that the horse is safe to be handled, and that you or a competent handler will be present. We may stop a session at any time if we believe a person or horse is at risk, and the session fee may still apply.</p>
+
+  <h2>5. Booking, payment, and cancellation</h2>
+  <p>Appointments are booked through Square, our scheduling and payment provider, or directly with us. Square's own terms and privacy policy apply to its service. Payment is due at booking or at the session as indicated when you book. Cancellation notice, late-cancellation charges, package expiry, and refunds are governed by our <a class="inline-link" href={path('refunds')}>Refund and cancellation policy</a>.</p>
+
+  <h2>6. Clients under 18</h2>
+  <p>Clients under 18 may attend only with a parent or legal guardian's written consent, and a parent or guardian must be present for the first session and whenever we ask. The parent or guardian agrees to these terms on the minor's behalf.</p>
+
+  <h2>7. Conduct and the studio</h2>
+  <p>The studio is on private property. Directions are shared only with confirmed clients and must not be published or passed on. We may decline or end a session for anyone who is unsafe, under the influence of alcohol or drugs, or abusive. Please arrive on time; late arrivals shorten the session rather than extend it.</p>
+
+  <h2>8. Photographs and recordings</h2>
+  <p>We will not photograph or record you or your horse for use on this website or social media without your separate written permission, which you may withdraw at any time for future use.</p>
+
+  <h2>9. This website</h2>
+  <p>The text, design, and images on this site belong to us or our licensors and may not be copied for commercial use without permission. Information on the site is provided for general purposes and may change without notice. We do our best to keep it accurate but do not guarantee that it is complete or error-free. Links to other websites, including Square, are provided for convenience; we are not responsible for their content or practices.</p>
+
+  <h2>10. Limitation of liability</h2>
+  <p>To the extent permitted by law, our total liability to you in connection with any session or this website is limited to the amount you paid us for the session concerned, and we are not liable for indirect or consequential losses. Nothing in these terms excludes liability for death or personal injury caused by our gross negligence or willful misconduct, or any other liability that Colorado law does not allow us to exclude.</p>
+
+  <h2>11. Governing law and disputes</h2>
+  <p>These terms are governed by the laws of the State of Colorado. If a dispute arises, please contact us first so we can try to resolve it directly. Any court proceedings will be brought in the state or federal courts serving {legal.county}, Colorado, and you agree to their jurisdiction. If any part of these terms is found unenforceable, the rest remains in effect.</p>
+
+  <h2>12. Changes</h2>
+  <p>We may update these terms from time to time. The date at the top of this page shows the current version. Changes apply to bookings made after the change; the terms in force when you booked apply to that booking.</p>
+</LegalLayout>

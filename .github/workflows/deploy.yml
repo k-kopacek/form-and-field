@@ -1,0 +1,62 @@
+# Builds the site and publishes it to GitHub Pages on every push to main.
+# One-time setup in the GitHub repo: Settings > Pages > Source: "GitHub Actions".
+# Then add repository Variables (Settings > Secrets and variables > Actions > Variables):
+#   PUBLIC_SITE_URL         https://<user>.github.io            (or https://www.yourdomain.com with a custom domain)
+#   BASE_PATH               /<repo-name>                        (or / with a custom domain)
+#   PUBLIC_BOOKING_URL      Square "Book now" link
+#   PUBLIC_BOOKING_EMBED_SRC  optional Square widget script
+#   PUBLIC_CONTACT_EMAIL, PUBLIC_CONTACT_PHONE, PUBLIC_CONTACT_INSTAGRAM  optional
+#   PUBLIC_SITE_LIVE        true only when the content is approved (removes noindex)
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      PUBLIC_SITE_URL: ${{ vars.PUBLIC_SITE_URL }}
+      BASE_PATH: ${{ vars.BASE_PATH || '/' }}
+      PUBLIC_BOOKING_URL: ${{ vars.PUBLIC_BOOKING_URL }}
+      PUBLIC_BOOKING_EMBED_SRC: ${{ vars.PUBLIC_BOOKING_EMBED_SRC }}
+      PUBLIC_CONTACT_EMAIL: ${{ vars.PUBLIC_CONTACT_EMAIL }}
+      PUBLIC_CONTACT_PHONE: ${{ vars.PUBLIC_CONTACT_PHONE }}
+      PUBLIC_CONTACT_INSTAGRAM: ${{ vars.PUBLIC_CONTACT_INSTAGRAM }}
+      PUBLIC_SITE_LIVE: ${{ vars.PUBLIC_SITE_LIVE || 'false' }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm check
+      - run: pnpm build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

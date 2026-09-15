@@ -1,0 +1,4 @@
+---
+import { testimonials } from '../data/site';
+---
+{testimonials.length > 0 && <section class="testimonials wrap section" aria-label="Client experiences">{testimonials.map(item => <figure><blockquote>{item.quote}</blockquote><figcaption>{item.name} · {item.context}</figcaption></figure>)}</section>}

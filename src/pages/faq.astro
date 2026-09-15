@@ -1,0 +1,11 @@
+---
+import Layout from '../layouts/Layout.astro';
+import Faq from '../components/Faq.astro';
+import Closing from '../components/Closing.astro';
+import { faqGroups } from '../data/faq';
+---
+<Layout title="Frequently Asked Questions" description="What to expect from private Pilates, equine bodywork, and Horse + Rider sessions at Form + Field in Larkspur, Colorado.">
+  <section class="wrap section faq-hero"><p class="eyebrow">Good questions. Clear answers.</p><h1>Before<br /><em>you begin.</em></h1><p>What to expect, what to bring, and how to plan your visit.</p><nav class="jump-links" aria-label="Question categories">{faqGroups.map(group => <a href={'#' + group.id}>{group.title}</a>)}</nav></section>
+  <div class="wrap">{faqGroups.map(group => <section id={group.id} class="section faq-section"><h2>{group.title}</h2><Faq items={group.items} /></section>)}</div>
+  <Closing />
+</Layout>

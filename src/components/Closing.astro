@@ -1,0 +1,6 @@
+---
+import BookingLink from './BookingLink.astro';
+interface Props { title?: string; text?: string }
+const { title = 'Start where you are.', text = 'A little more awareness. A stronger connection. A session shaped around you.' } = Astro.props;
+---
+<section class="closing wrap section"><div><p class="eyebrow">Your next move</p><h2>{title}</h2><p>{text}</p></div><BookingLink /></section>

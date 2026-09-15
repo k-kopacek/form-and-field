@@ -1,0 +1,74 @@
+---
+import '@fontsource/cormorant-garamond/latin-400.css';
+import '@fontsource/cormorant-garamond/latin-400-italic.css';
+import '@fontsource/cormorant-garamond/latin-500.css';
+import '@fontsource-variable/dm-sans';
+import '../styles/global.css';
+import { brand, navigation, path, asset, contact, isLive } from '../data/site';
+import BookingLink from '../components/BookingLink.astro';
+import { legal, legalPages } from '../data/legal';
+interface Props { title: string; description: string; active?: string }
+const { title, description, active = '' } = Astro.props;
+const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : undefined;
+const schema = {
+  '@context': 'https://schema.org', '@type': 'LocalBusiness', name: brand.name,
+  description: 'Private Pilates, equine bodywork, and horse + rider performance in Larkspur, Colorado.',
+  ...(Astro.site ? { url: new URL(path(), Astro.site).href } : {}),
+  address: { '@type': 'PostalAddress', addressLocality: 'Larkspur', addressRegion: 'CO', addressCountry: 'US' },
+  founder: { '@type': 'Person', name: brand.founder },
+  ...(contact.email ? { email: contact.email } : {}),
+  ...(contact.phone ? { telephone: contact.phone } : {}),
+  areaServed: { '@type': 'Place', name: 'Larkspur, Colorado' },
+};
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#263a30" /><title>{title} | {brand.name}</title>
+    <meta name="description" content={description} />
+    {!isLive && <meta name="robots" content="noindex, nofollow" />}
+    {canonical && <link rel="canonical" href={canonical} />}
+    <meta property="og:type" content="website" /><meta property="og:title" content={title + ' | ' + brand.name} />
+    <meta property="og:description" content={description} /><meta property="og:site_name" content={brand.name} />
+    <meta property="og:locale" content="en_US" />{canonical && <meta property="og:url" content={canonical} />}
+    <meta name="twitter:card" content="summary" /><meta name="twitter:title" content={title + ' | ' + brand.name} />
+    <meta name="twitter:description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={asset('icons/favicon.svg')} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(schema).replace(/</g, '\\u003c')} />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <a class="wordmark" href={path()} aria-label={brand.name + ' home'}>{brand.first}<span class="plus">+</span>{brand.second}</a>
+      <button class="menu-toggle" aria-expanded="false" aria-controls="site-nav"><span>Menu</span><span class="menu-lines" aria-hidden="true"></span></button>
+      <nav id="site-nav" aria-label="Main navigation">
+        {navigation.map(link => <a href={path(link.slug)} aria-current={active === link.slug ? 'page' : undefined}>{link.label}</a>)}
+        <BookingLink />
+      </nav>
+    </header>
+    <main id="main"><slot /></main>
+    <footer class="footer">
+      <div class="footer-top">
+        <div><a class="wordmark" href={path()}>{brand.first}<span class="plus">+</span>{brand.second}</a><p>Movement. Performance. Connection.</p><p class="footer-legal-name">{legal.legalName}, {legal.entityType}.<br />{brand.location}{legal.mailingAddress && <><br />{legal.mailingAddress}</>}</p></div>
+        <div><span class="eyebrow">Find your balance</span><p>{brand.location}<br />Private appointments with {brand.founder}.<br />By appointment only. Directions shared with confirmed clients.</p>{(contact.email || contact.phone || contact.instagram) && <p class="footer-contact">{contact.email && <a href={'mailto:' + contact.email}>{contact.email}</a>}{contact.phone && <a href={'tel:' + contact.phone.replace(/[^+\d]/g, '')}>{contact.phone}</a>}{contact.instagram && <a href={'https://www.instagram.com/' + contact.instagram.replace(/^@/, '') + '/'} target="_blank" rel="noopener">Instagram<span class="visually-hidden"> (opens in a new tab)</span></a>}</p>}</div>
+        <nav class="footer-links" aria-label="Site and policies"><a href={path('faq')}>Common questions</a><a href={path('book')}>Plan your visit</a>{legalPages.map(page => <a href={path(page.slug)}>{page.label}</a>)}</nav>
+      </div>
+      <div class="footer-bottom"><span>© {new Date().getFullYear()} {legal.legalName}. All rights reserved.</span><span>{brand.descriptor}</span><span>Not medical or veterinary care. <a href={path('terms')}>Read our terms</a>.</span></div>
+    </footer>
+    <script>
+      const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle');
+      const nav = document.querySelector<HTMLElement>('#site-nav');
+      const close = () => { toggle?.setAttribute('aria-expanded', 'false'); nav?.classList.remove('is-open'); };
+      toggle?.addEventListener('click', () => {
+        const open = toggle.getAttribute('aria-expanded') !== 'true';
+        toggle.setAttribute('aria-expanded', String(open)); nav?.classList.toggle('is-open', open);
+      });
+      document.addEventListener('keydown', event => { if (event.key === 'Escape' && toggle?.getAttribute('aria-expanded') === 'true') { close(); toggle.focus(); } });
+      nav?.querySelectorAll('a').forEach(link => link.addEventListener('click', close));
+      document.addEventListener('click', event => { if (event.target instanceof Node && !document.querySelector('.site-header')?.contains(event.target)) close(); });
+      window.matchMedia('(min-width: 1024px)').addEventListener('change', close);
+      document.documentElement.classList.add('has-js');
+    </script>
+  </body>
+</html>

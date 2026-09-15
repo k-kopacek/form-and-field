@@ -1,0 +1,20 @@
+---
+import Layout from '../layouts/Layout.astro';
+import EditorialImage from '../components/EditorialImage.astro';
+import BookingLink from '../components/BookingLink.astro';
+import Pricing from '../components/Pricing.astro';
+import Faq from '../components/Faq.astro';
+import Closing from '../components/Closing.astro';
+import { faqGroups } from '../data/faq';
+import { equineWarning } from '../data/legal';
+import { path } from '../data/site';
+---
+<Layout active="equine" title="Equine Bodywork in Larkspur, Colorado" description="Movement-focused equine bodywork with BTMM-certified Stephanie Kopacek in Larkspur, Colorado. Individual attention to balance, mobility, and athletic function.">
+  <section class="page-hero wrap"><div class="page-hero-copy"><p class="eyebrow">02 / Equine bodywork & performance</p><h1>Observe closely.<br /><em>Work thoughtfully.</em></h1><p>Bodywork that begins with the horse in front of you: their movement, their balance, and their responses.</p><BookingLink label="Plan an equine session" /></div><EditorialImage slot="equine-hero" eager /></section>
+  <section class="wrap section editorial-split"><div><p class="eyebrow">For the equine athlete</p><h2>Attention to<br /><em>the whole picture.</em></h2><EditorialImage slot="bodywork-detail" class="split-image" sizes="(max-width: 1023px) 90vw, 35vw" /></div><div class="prose"><p>A horse’s movement deserves time and careful observation. Stephanie brings her Balance Through Movement Method certification to hands-on bodywork focused on movement quality, body awareness, mobility, and athletic function.</p><p>Each session is individual. The work is shaped by what Stephanie observes and how your horse responds, with an emphasis on a quiet, considered experience.</p></div></section>
+  <section class="sage-section"><div class="wrap section editorial-split"><div><p class="eyebrow">During your appointment</p><h2>The horse<br /><em>sets the pace.</em></h2></div><ol class="steps"><li><h3>Listen & observe.</h3><p>Discuss your horse’s routine and goals, then observe posture and movement.</p></li><li><h3>Work with awareness.</h3><p>Thoughtful hands-on work follows the horse’s comfort and responses.</p></li><li><h3>Reflect & discuss.</h3><p>Review observations and consider the next steps within the scope of bodywork.</p></li></ol></div></section>
+  <div class="wide-figure wrap"><EditorialImage slot="stephanie-equine" class="wide-image" sizes="90vw" /></div>
+  <section class="wrap section price-section"><div><p class="eyebrow">Individual equine sessions</p><h2>Time and attention.<br /><em>For your horse.</em></h2><p class="support-copy">Confirm the location and handling arrangements with Stephanie before your visit or any horse transport.</p></div><div><Pricing items={['equine']} /><BookingLink /><p class="fine-print">Bodywork is movement and performance support. It does not diagnose or treat injury, disease, lameness, or medical conditions, and does not replace veterinary care. Please consult your veterinarian about any pain, lameness, or change in your horse’s health.</p><p class="fine-print statutory-warning">{equineWarning}</p><p class="fine-print">Sessions are subject to our <a class="inline-link" href={path('terms')}>terms</a>, including a signed participation agreement before your first session.</p></div></section>
+  <section class="wrap section faq-section"><div><p class="eyebrow">Good to know</p><h2>Before your session.</h2></div><Faq items={faqGroups[1].items} /></section>
+  <Closing title="A more considered approach." text="Make space to understand your horse’s movement." />
+</Layout>

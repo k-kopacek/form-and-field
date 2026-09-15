@@ -1,0 +1,20 @@
+---
+import Layout from './Layout.astro';
+import { legal, legalPages, formatDate, placeholdersPresent } from '../data/legal';
+import { path } from '../data/site';
+interface Props { title: string; description: string; slug: string; updated: string; eyebrow: string }
+const { title, description, slug, updated, eyebrow } = Astro.props;
+---
+<Layout title={title} description={description} active={slug}>
+  <section class="wrap section legal-hero">
+    <p class="eyebrow">{eyebrow}</p>
+    <h1>{title}</h1>
+    <p class="legal-meta">Last updated {formatDate(updated)} · {legal.tradeName} is operated by {legal.legalName}, {legal.entityType}.</p>
+    <nav class="jump-links" aria-label="Policies">{legalPages.map(page => <a href={path(page.slug)} aria-current={page.slug === slug ? 'page' : undefined}>{page.label}</a>)}</nav>
+  </section>
+  <section class="wrap legal-body">
+    {placeholdersPresent && import.meta.env.DEV && <p class="legal-warning" role="note">Placeholder legal name detected. Set legalName and entityType in src/data/legal.ts before launch. (This notice only shows in development.)</p>}
+    <div class="legal-prose"><slot /></div>
+    <p class="fine-print legal-contact">Questions about this policy: {legal.contactEmail ? <a class="inline-link" href={'mailto:' + legal.contactEmail}>{legal.contactEmail}</a> : <a class="inline-link" href={path('book')}>use the contact details on the Book page</a>}{legal.mailingAddress && <> · {legal.mailingAddress}</>}.</p>
+  </section>
+</Layout>
